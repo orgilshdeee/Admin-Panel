@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+.container {
+  height: 100vh;
+}
+.login-left {
+  background-image: url(../pictures/images/login-background1.png);
+  background-size: 50vw;
+}
+.login-right {
+  position: relative;
+  background-image: url(../pictures/images/login-background1.png);
+  background-color: wheat;
+  background-size: 50vw;
+  opacity: 0.5;
+}
+.loginForm {
+  position: absolute;
+  top: 30%;
+  left: 56%;
+  height: 350px;
+  width: 500px;
+  background-color: white;
+  padding: 90px 70px 50px 0px;
+  border-radius: 5%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
