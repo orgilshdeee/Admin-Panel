@@ -5,6 +5,8 @@
 .header {
   background-color: #ffece1;
   margin: 0;
+  display: flex;
+  justify-content: end;
 }
 .sider {
   margin: 0;

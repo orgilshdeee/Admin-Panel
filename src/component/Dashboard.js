@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import ControlPanel from "./SideMenu/ControlPanel";
 import Orders from "./SideMenu/Orders";
@@ -8,12 +8,44 @@ import Users from "./SideMenu/Users";
 import Deliverymen from "./SideMenu/Deliverymen";
 import "antd/dist/antd.css";
 import "../style/main.css";
-import { Layout, Menu } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Menu, message, Space, Layout } from "antd";
 import Icons from "../pictures/icons/icons.js";
 import { MENU } from "../util/constants";
+import { useUser } from "../contexts/UserContext";
+import DrawerComp from "./Drawer";
 
 export default function Dashboard() {
+  const [user, setUser] = useUser();
+  const [drawer, setDrawer] = useState(false);
   const { Header, Content, Footer, Sider } = Layout;
+  const onClick = ({ key }) => {
+    message.info(`Click on item ${key}`);
+  };
+  function logOutFunc() {
+    setUser(null);
+    localStorage.clear();
+  }
+  function closeDrawer(props) {
+    setDrawer(false);
+  }
+  const menu = (
+    <Menu>
+      <Menu.Item
+        key="0"
+        onClick={() => {
+          setDrawer(true);
+        }}
+        style={{ color: "#f17228" }}
+      >
+        Тохиргоо
+      </Menu.Item>
+      <Menu.Item key="1" onClick={logOutFunc} style={{ color: "#f17228" }}>
+        Гарах
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <>
       <Layout style={{ margin: "0" }}>
@@ -43,7 +75,20 @@ export default function Dashboard() {
           </Menu>
         </Sider>
         <Layout className="contentLay">
-          <Header className="header" />
+          <Header className="header">
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space style={{ color: "#f17228", margin: "auto" }}>
+                  <img
+                    src="/pictures/user.svg"
+                    alt=""
+                    style={{ display: "flex" }}
+                  />
+                  Админ
+                </Space>
+              </a>
+            </Dropdown>
+          </Header>
           <Content style={{ margin: "0 16px" }}>
             <Routes
               className="site-layout-background"
@@ -72,6 +117,7 @@ export default function Dashboard() {
           </Footer>
         </Layout>
       </Layout>
+      <DrawerComp open={drawer} close={closeDrawer} />
     </>
   );
 }
