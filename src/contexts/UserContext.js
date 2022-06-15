@@ -11,11 +11,13 @@ export const UserProvider = (props) => {
   useEffect(() => {
     if (localStorage.getItem("user")) {
       const data = JSON.parse(localStorage.getItem("user"));
+      console.log(data);
       setUser({
-        userName: data.name,
+        userName: data.userName,
         email: data.email,
         address: data.address,
         id: data.id,
+        token: data.token,
       });
     }
   }, []);

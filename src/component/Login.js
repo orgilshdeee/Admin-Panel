@@ -12,20 +12,20 @@ export default function Login() {
 
   const onFinish = (values) => {
     setLoading(true);
-    console.log("Success:", values);
+    // console.log("Success:", values);
     userService
       .loginUser(values)
       .then((res) => res.json())
       .then((res) => {
         if (res.success === true) {
-          console.log(res);
+          // console.log(res);
           setUser({
             userName: res.data.name,
             email: res.data.email,
             address: res.data.address,
             id: res.data.id,
+            token: res.token,
           });
-          console.log(res);
         }
       })
       .finally(() => {
