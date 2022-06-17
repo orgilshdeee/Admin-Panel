@@ -14,33 +14,32 @@ import Icons from "../pictures/icons/icons.js";
 import { MENU } from "../util/constants";
 import { useUser } from "../contexts/UserContext";
 import DrawerComp from "./Drawer";
+import { OmitProps } from "antd/lib/transfer/ListBody";
 
 export default function Dashboard() {
   const [user, setUser] = useUser();
-  const [drawer, setDrawer] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const { Header, Content, Footer, Sider } = Layout;
-  const onClick = ({ key }) => {
-    message.info(`Click on item ${key}`);
-  };
-  function logOutFunc() {
-    setUser(null);
-    localStorage.clear();
-  }
-  function closeDrawer(props) {
-    setDrawer(false);
-  }
+
   const menu = (
     <Menu>
       <Menu.Item
         key="0"
         onClick={() => {
-          setDrawer(true);
+          setOpenDrawer(true);
         }}
         style={{ color: "#f17228" }}
       >
         Тохиргоо
       </Menu.Item>
-      <Menu.Item key="1" onClick={logOutFunc} style={{ color: "#f17228" }}>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          setUser(null);
+          localStorage.clear();
+        }}
+        style={{ color: "#f17228" }}
+      >
         Гарах
       </Menu.Item>
     </Menu>
@@ -117,7 +116,12 @@ export default function Dashboard() {
           </Footer>
         </Layout>
       </Layout>
-      <DrawerComp open={drawer} close={closeDrawer} />
+      <DrawerComp
+        open={openDrawer}
+        close={() => {
+          setOpenDrawer(false);
+        }}
+      />
     </>
   );
 }

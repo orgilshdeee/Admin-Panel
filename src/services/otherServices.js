@@ -1,9 +1,37 @@
-const getAllOrders = async () => {
-  return await fetch("../../DummyJson/Orders.json", {
-    method: "GET",
+const getAllOrders = async (credentials, pageNum) => {
+  return await fetch(`https://dev-api.mstars.mn/api/orders?page=${pageNum}`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(credentials),
+  });
+};
+const getAllUsers = async (credentials) => {
+  return await fetch("https://dev-api.mstars.mn/admin/users", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
+};
+const getAllFood = async () => {
+  return await fetch("https://dev-api.mstars.mn/api/foods", {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+};
+
+const saveFood = async (credentials) => {
+  return await fetch("https://dev-api.mstars.mn/api/new/food", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(credentials),
   });
 };
 // const registerUser = async (credentials) => {
@@ -23,4 +51,7 @@ const getAllOrders = async () => {
 
 export const otherServices = {
   getAllOrders,
+  getAllUsers,
+  getAllFood,
+  saveFood,
 };

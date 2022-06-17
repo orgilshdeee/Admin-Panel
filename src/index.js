@@ -7,15 +7,24 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import { OrderProvider } from "./contexts/OrderContext";
 import { LoadingProvider } from "./contexts/LoadingContext";
+import { AllUsersProvider } from "./contexts/AllUsersContext";
+import { FoodProvider } from "./contexts/FoodContext";
+import { DrawerProvider } from "./contexts/DrawerContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <LoadingProvider>
       <UserProvider>
         <OrderProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <AllUsersProvider>
+            <FoodProvider>
+              <DrawerProvider>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </DrawerProvider>
+            </FoodProvider>
+          </AllUsersProvider>
         </OrderProvider>
       </UserProvider>
     </LoadingProvider>

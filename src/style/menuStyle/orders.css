@@ -1,13 +1,26 @@
-.header {
-  text-align: center;
+.order-header {
+  display: flex;
   text-decoration: none;
+  background-color: #ffece1;
+  justify-content: space-around;
 }
-.header span {
-  margin-right: 40px;
+.order-header span {
+  margin-left: 40px;
 }
 
 .cols {
-  /* margin-left: 30px; */
-  padding-left: 50px;
-  /* color: aliceblue; */
+  /* margin-left: 55px; */
+  /* padding-left: 50px; */
+}
+.listItems {
+  /* display: block !important; */
+  /* justify-content: space-between; */
+  /* margin: 0 1%; */
+  display: flex;
+  justify-content: space-between;
+}
+.rowss {
+}
+.rows {
+  width: 100%;
 }

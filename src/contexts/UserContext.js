@@ -13,11 +13,11 @@ export const UserProvider = (props) => {
       const data = JSON.parse(localStorage.getItem("user"));
       console.log(data);
       setUser({
-        userName: data.userName,
+        name: data.name,
         email: data.email,
         address: data.address,
-        id: data.id,
         token: data.token,
+        phone: data.phone,
       });
     }
   }, []);

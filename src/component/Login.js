@@ -18,12 +18,12 @@ export default function Login() {
       .then((res) => res.json())
       .then((res) => {
         if (res.success === true) {
-          // console.log(res);
+          console.log(res);
           setUser({
-            userName: res.data.name,
+            name: res.data.name,
             email: res.data.email,
             address: res.data.address,
-            id: res.data.id,
+            phone: res.data.phone,
             token: res.token,
           });
         }
