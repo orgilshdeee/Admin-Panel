@@ -1,15 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Divider, List, Row, Col } from "antd";
+import { Divider, List, Row, Col, Menu, Dropdown, Space } from "antd";
 import { otherServices } from "../../services/otherServices";
 import { useFood } from "../../contexts/FoodContext";
 import DrawerComp from "../Drawer";
 import { useDrawer } from "../../contexts/DrawerContext";
+import "../../style/menuStyle/foods.css";
+import userEvent from "@testing-library/user-event";
+import { useUser } from "../../contexts/UserContext";
 
 export default function FoodMenu() {
   const [food, setFood] = useFood();
+  const [user, setUser] = useUser();
   const [drawer, setDrawer] = useDrawer();
   const [openDrawer, setOpenDrawer] = useState(false);
-
+  const [temp, setTemp] = useState();
+  function deleteFood() {
+    otherServices
+      .deleteFood({ token: user.token }, temp)
+      .then((res) => res.json())
+      .then((res) => console.log(res));
+  }
+  const menu = (
+    <Menu>
+      <Menu.Item key="0" onClick={() => {}} style={{ color: "#f17228" }}>
+        Засах
+      </Menu.Item>
+      <Menu.Item key="1" onClick={deleteFood} style={{ color: "#f17228" }}>
+        Устгах
+      </Menu.Item>
+    </Menu>
+  );
   useEffect(() => {
     otherServices
       .getAllFood()
@@ -40,7 +60,7 @@ export default function FoodMenu() {
       </Divider>
       <List
         header={
-          <div className="order-header">
+          <div className="food-header">
             <span>#</span>
             <span>Зураг</span>
             <span>Хоолны нэр</span>
@@ -48,6 +68,7 @@ export default function FoodMenu() {
             <span>Порц</span>
             <span>Үнэ(₮)</span>
             <span>Категори</span>
+            <span>kebab</span>
           </div>
         }
         footer={<div></div>}
@@ -60,29 +81,34 @@ export default function FoodMenu() {
                 <Row className="rows">
                   <Col
                     className="cols"
-                    span={3}
+                    span={2}
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       marginTop: "auto",
                       marginBottom: "auto",
+                      paddingRight: "44px",
                     }}
                   >
                     {index + 1}
                   </Col>
-                  <Col className="cols" span={3}>
+                  <Col className="cols" span={2}>
                     <img
                       src={`https://mtars-fooddelivery.s3.ap-southeast-1.amazonaws.com${item.image}`}
-                      style={{ width: "100px", marginLeft: "34px" }}
+                      style={{
+                        width: "100px",
+                      }}
                     />
                   </Col>
                   <Col
                     className="cols"
                     span={3}
                     style={{
-                      marginLeft: "6%",
+                      display: "flex",
+                      justifyContent: "center",
                       marginTop: "auto",
                       marginBottom: "auto",
+                      paddingRight: "45px",
                     }}
                   >
                     {item.name}
@@ -91,7 +117,6 @@ export default function FoodMenu() {
                     className="cols"
                     span={3}
                     style={{
-                      marginLeft: "5%",
                       marginTop: "auto",
                       marginBottom: "auto",
                     }}
@@ -102,8 +127,6 @@ export default function FoodMenu() {
                     className="cols"
                     span={2}
                     style={{
-                      display: "flex",
-                      justifyContent: "center",
                       marginTop: "auto",
                       marginBottom: "auto",
                     }}
@@ -112,20 +135,29 @@ export default function FoodMenu() {
                   </Col>
                   <Col
                     className="cols"
-                    span={4}
+                    span={2}
                     style={{
-                      display: "flex",
-                      justifyContent: "center",
                       marginTop: "auto",
                       marginBottom: "auto",
-                      marginLeft: "1%",
                     }}
                   >
                     {item.price}
                   </Col>
                   <Col
                     className="cols"
-                    span={3}
+                    span={2}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "auto",
+                      marginBottom: "auto",
+                      paddingRight: "40px",
+                    }}
+                  >
+                    {item.category}
+                  </Col>
+                  <Col
+                    span={2}
                     style={{
                       display: "flex",
                       justifyContent: "center",
@@ -133,7 +165,19 @@ export default function FoodMenu() {
                       marginBottom: "auto",
                     }}
                   >
-                    {item.category}
+                    <Dropdown overlay={menu} trigger={["click"]}>
+                      <a
+                        onClick={() => {
+                          setTemp(item._id);
+                        }}
+                      >
+                        <Space id="outer-kebab">
+                          <span className="kebab"></span>
+                          <span className="kebab"></span>
+                          <span className="kebab"></span>
+                        </Space>
+                      </a>
+                    </Dropdown>
                   </Col>
                 </Row>
               </List.Item>

@@ -34,6 +34,15 @@ const saveFood = async (credentials) => {
     body: JSON.stringify(credentials),
   });
 };
+const deleteFood = async (token, id) => {
+  return await fetch(`https://dev-api.mstars.mn/api/delete/food/${id}`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(token),
+  });
+};
 // const registerUser = async (credentials) => {
 //   return await fetch("http://52.221.191.153/admin/register", {
 //     method: "POST",
@@ -54,4 +63,5 @@ export const otherServices = {
   getAllUsers,
   getAllFood,
   saveFood,
+  deleteFood,
 };
