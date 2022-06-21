@@ -43,6 +43,15 @@ const deleteFood = async (token, id) => {
     body: JSON.stringify(token),
   });
 };
+const updateFood = async (data, id) => {
+  return await fetch(`${id}`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(data.token),
+  });
+};
 // const registerUser = async (credentials) => {
 //   return await fetch("http://52.221.191.153/admin/register", {
 //     method: "POST",
@@ -64,4 +73,5 @@ export const otherServices = {
   getAllFood,
   saveFood,
   deleteFood,
+  updateFood,
 };

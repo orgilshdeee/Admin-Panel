@@ -13,16 +13,23 @@ export default function FoodMenu() {
   const [user, setUser] = useUser();
   const [drawer, setDrawer] = useDrawer();
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [temp, setTemp] = useState();
+  const [data, setData] = useState();
   function deleteFood() {
     otherServices
-      .deleteFood({ token: user.token }, temp)
+      .deleteFood({ token: user.token }, data._id)
       .then((res) => res.json())
       .then((res) => console.log(res));
   }
   const menu = (
     <Menu>
-      <Menu.Item key="0" onClick={() => {}} style={{ color: "#f17228" }}>
+      <Menu.Item
+        key="0"
+        onClick={() => {
+          setDrawer("editFood");
+          setOpenDrawer(true);
+        }}
+        style={{ color: "#f17228" }}
+      >
         Засах
       </Menu.Item>
       <Menu.Item key="1" onClick={deleteFood} style={{ color: "#f17228" }}>
@@ -168,7 +175,7 @@ export default function FoodMenu() {
                     <Dropdown overlay={menu} trigger={["click"]}>
                       <a
                         onClick={() => {
-                          setTemp(item._id);
+                          setData(item);
                         }}
                       >
                         <Space id="outer-kebab">
@@ -190,6 +197,8 @@ export default function FoodMenu() {
         close={() => {
           setOpenDrawer(false);
         }}
+        data={data}
+        test="this is index"
       />
     </div>
   );

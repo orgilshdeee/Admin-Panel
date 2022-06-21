@@ -9,7 +9,7 @@ export default function DrawerComp(props) {
   const [user, setUser] = useUser();
   const [drawer, setDrawer] = useDrawer();
 
-  function safeInfo(data) {
+  function saveInfo(data) {
     data.email = user.email;
     data.token = user.token;
     console.log(data);
@@ -20,8 +20,6 @@ export default function DrawerComp(props) {
     props.close(false);
   }
   function sendFood(data) {
-    // data.token = user.token;
-    // data.sales = false;
     const temp = {
       category_id: "618b4838d9ba304e7d5c83dd",
       name: "Бууз",
@@ -43,6 +41,18 @@ export default function DrawerComp(props) {
       .saveFood(temp)
       .then((res) => res.json())
       .then((res) => console.log(res));
+  }
+  function updateFood(data) {
+    data.category_id = props.data?.category_id;
+    data.discount = props.data?.discount;
+    data.sales = props.data?.sales;
+    data.tumb_img = props.data?.tumb_img;
+    data._id = props.data?._id;
+    data.image = props.data?.image;
+    data.price = parseInt(data.price);
+    console.log(data);
+    // otherServices
+    // .editUser(data);
   }
   switch (drawer) {
     case "edit":
@@ -69,8 +79,7 @@ export default function DrawerComp(props) {
             initialValues={{
               remember: true,
             }}
-            onFinish={safeInfo}
-            // onFinishFailed={onFinishFailed}
+            onFinish={saveInfo}
             autoComplete="off"
           >
             <Form.Item
@@ -250,6 +259,139 @@ export default function DrawerComp(props) {
             >
               <Button type="primary" htmlType="submit">
                 Нэмэх
+              </Button>
+            </Form.Item>
+          </Form>
+        </Drawer>
+      );
+    case "editFood":
+      return (
+        <Drawer
+          title="Хоол нэмэх"
+          placement="right"
+          onClose={() => {
+            props.close(false);
+            setDrawer("edit");
+          }}
+          visible={props.open}
+        >
+          <Form
+            span={12}
+            offset={6}
+            className="editForm"
+            name="basic"
+            labelCol={{
+              span: 8,
+            }}
+            wrapperCol={{
+              span: 16,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={updateFood}
+            autoComplete="off"
+          >
+            <Form.Item
+              label="Нэр"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: "Нэр дутуу байна!",
+                },
+              ]}
+              initialValue={props.data?.name}
+            >
+              <Input placeholder="Нэр оруулна уу." />
+            </Form.Item>
+
+            <Form.Item
+              label="Тайлбар"
+              name="ingredients"
+              rules={[
+                {
+                  required: true,
+                  message: "Орц дутуу байна!",
+                },
+              ]}
+              initialValue={props.data?.ingredients}
+            >
+              <Input placeholder="Орц оруулна уу." />
+            </Form.Item>
+            <Form.Item
+              label="Порц"
+              name="portion"
+              rules={[
+                {
+                  required: true,
+                  message: "Порц дутуу байна!",
+                },
+              ]}
+              initialValue={props.data?.portion}
+            >
+              <Input placeholder="Нууц үгээ оруулна уу." />
+            </Form.Item>
+            <Form.Item
+              label="Үнэ"
+              name="price"
+              rules={[
+                {
+                  required: true,
+                  message: "Үнэ дутуу байна!",
+                },
+              ]}
+              initialValue={props.data?.price}
+            >
+              <Input placeholder="Үнэ оруулна уу." />
+            </Form.Item>
+            <Form.Item
+              label="Категори"
+              name="category"
+              rules={[
+                {
+                  required: true,
+                  message: "Категори дутуу байна!",
+                },
+              ]}
+              initialValue={props.data?.category}
+            >
+              <Input placeholder="Категори оруулна уу." />
+            </Form.Item>
+            <Form.Item
+              label="Тоо хэмжээ"
+              name="stock"
+              rules={[
+                {
+                  required: true,
+                  message: "Тоо хэмжээ дутуу байна!",
+                },
+              ]}
+              initialValue={props.data?.stock}
+            >
+              <Input placeholder="Тоо хэмжээ оруулна уу." />
+            </Form.Item>
+            {/* <Form.Item
+              label="Зураг"
+              name="image"
+              rules={[
+                {
+                  required: true,
+                  message: "Зураг дутуу байна!",
+                },
+              ]}
+            >
+              <Input placeholder="Зураг оруулна уу." />
+            </Form.Item> */}
+
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button type="primary" htmlType="submit">
+                Хадгалах
               </Button>
             </Form.Item>
           </Form>
